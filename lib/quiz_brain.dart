@@ -42,9 +42,8 @@ class QuizBrain {
     return _questionBank[_questionNumber].questionText;
   }
 
-  getAnswer() {
-    return _questionBank[_questionNumber].questionAnswer;
-  }
+  String? getAnswer => _questionBank[_questionNumber].questionAnswer;
+  
 
   bool get isFinished => _questionNumber >= _questionBank.length - 1); 
   
