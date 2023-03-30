@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -32,29 +33,30 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
- List <Icon> scoreKeeper = [
-  // const Icon(
-  //   Icons.check,
-  //   color: Colors.green,
-  // ),
-  // const Icon(
-  //   Icons.close,
-  //   color: Colors.red,
-  // ),
-  // const Icon(
-  //   Icons.close,
-  //   color: Colors.red,
-  // ),
-  // const Icon(
-  //   Icons.check,
-  //   color: Colors.green,
-  //   )
+  List<Icon> scoreKeeper = [];
 
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctAnswer = quizBrain.getAnswer();
+    setState(() {
+      if (quizBrain.isFinished() == true) {
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'You\'ve reached the end of this quiz.',
+        ).show();
+        quizBrain.reset();
+        scoreKeeper = [];
+      } else {
+        if (userPickedAnswer == correctAnswer) {
+          scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
+        } else {
+          scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
+        }
 
-  
- ];
-
-int questionNumber = 0;
+        quizBrain.nextQuestion();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +64,13 @@ int questionNumber = 0;
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-         Expanded(
+        Expanded(
           flex: 5,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionBank[questionNumber].questionText!,
+                quizBrain.getQuestionText()!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 25.0,
@@ -83,12 +85,7 @@ int questionNumber = 0;
             padding: const EdgeInsets.all(15.0),
             child: TextButton(
               onPressed: () {
-                quizBrain.questionBank[questionNumber].questionAnswer;
-                 
-                setState(() {
-                  questionNumber++;
-                });
-                
+                checkAnswer(true);
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -108,12 +105,7 @@ int questionNumber = 0;
             padding: const EdgeInsets.all(15.0),
             child: TextButton(
               onPressed: () {
-               quizBrain.questionBank[questionNumber].questionAnswer;
-                
-                setState(() {
-                 questionNumber++; 
-                });
-                
+                checkAnswer(false);
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -130,8 +122,6 @@ int questionNumber = 0;
         ),
         Row(
           children: scoreKeeper,
-
-          
         ),
       ],
     );
