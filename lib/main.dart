@@ -46,10 +46,13 @@ class _QuizPageState extends State<QuizPage> {
         ).show();
         quizBrain.reset();
         scoreKeeper = [];
+        
         return;
-      } e
+      } 
+      
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
+          
           return;
         } 
           scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
