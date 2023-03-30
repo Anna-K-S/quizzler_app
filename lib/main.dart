@@ -27,9 +27,10 @@ class Quizzler extends StatelessWidget {
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
-
+  
   @override
-  _QuizPageState createState() => _QuizPageState();
+ _QuizPageState createState() => _QuizPageState();
+
 }
 
 class _QuizPageState extends State<QuizPage> {
@@ -46,22 +47,19 @@ class _QuizPageState extends State<QuizPage> {
         ).show();
         quizBrain.reset();
         scoreKeeper = [];
-        
-        return;
-      } 
-      
+      } else {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
-          
-          return;
-        } 
+        } else {
           scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
-        
+        }
 
         quizBrain.nextQuestion();
       }
     });
   }
+    
+  
 
   @override
   Widget build(BuildContext context) {

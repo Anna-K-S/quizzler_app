@@ -2,7 +2,9 @@ import 'question.dart';
 
 class QuizBrain {
   int _questionNumber = 0;
+
   final List<Question> _questionBank = [
+
     Question(q: 'Some cats are actually allergic to humans', a: true),
     Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
     Question(
@@ -38,17 +40,23 @@ class QuizBrain {
     }
   }
 
-  String? getQuestionText() {
+  String? getQuestionText() { 
     return _questionBank[_questionNumber].questionText;
   }
 
-  String? getAnswer => _questionBank[_questionNumber].questionAnswer;
-  
+  getAnswer() { 
+    return _questionBank[_questionNumber].questionAnswer;
+  }
 
-  bool get isFinished => _questionNumber >= _questionBank.length - 1); 
-  
- void reset() {
-  _questionNumber = 0;
- }
+  bool isFinished() {
+    if (_questionNumber >= _questionBank.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  void reset() {
+    _questionNumber = 0;
+  }
 }
