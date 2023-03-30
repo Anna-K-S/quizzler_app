@@ -46,12 +46,14 @@ class _QuizPageState extends State<QuizPage> {
         ).show();
         quizBrain.reset();
         scoreKeeper = [];
-      } else {
+        return;
+      } e
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
-        } else {
+          return;
+        } 
           scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
-        }
+        
 
         quizBrain.nextQuestion();
       }
