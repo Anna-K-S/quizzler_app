@@ -27,19 +27,18 @@ class Quizzler extends StatelessWidget {
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
-  
-  @override
- _QuizPageState createState() => _QuizPageState();
 
+  @override
+  _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
   void checkAnswer(bool userPickedAnswer) {
-    bool correctAnswer = quizBrain.getAnswer();
+    bool? correctAnswer = quizBrain.getAnswer();
     setState(() {
-      if (quizBrain.isFinished() == true) {
+      if (quizBrain.isFinished == true) {
         Alert(
           context: context,
           title: 'Finished!',
@@ -47,19 +46,16 @@ class _QuizPageState extends State<QuizPage> {
         ).show();
         quizBrain.reset();
         scoreKeeper = [];
-      } else {
-        if (userPickedAnswer == correctAnswer) {
-          scoreKeeper.add(const Icon(Icons.check, color: Colors.green));
-        } else {
-          scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
-        }
 
-        quizBrain.nextQuestion();
+        return;
       }
+      userPickedAnswer == correctAnswer
+          ? scoreKeeper.add(const Icon(Icons.check, color: Colors.green))
+          : scoreKeeper.add(const Icon(Icons.close, color: Colors.red));
+
+      quizBrain.nextQuestion();
     });
   }
-    
-  
 
   @override
   Widget build(BuildContext context) {
